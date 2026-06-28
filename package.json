@@ -1,0 +1,22 @@
+{
+  "name": "repnoxx-fit",
+  "version": "1.0.0",
+  "description": "REPNOXX Premium Fitness & Nutrition Tracker",
+  "main": "index.html",
+  "scripts": {
+    "dev": "npx serve -p 3000",
+    "server": "python server.py"
+  },
+  "keywords": [
+    "fitness",
+    "tracker",
+    "repnoxx",
+    "calories",
+    "protein"
+  ],
+  "author": "REPNOXX Team",
+  "license": "ISC",
+  "devDependencies": {
+    "serve": "^14.2.1"
+  }
+}

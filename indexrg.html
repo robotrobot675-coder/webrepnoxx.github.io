@@ -1,0 +1,1111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>REPNOXX | Elite Fitness & Nutrition Tracker</title>
+    <!-- Premium Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Orbitron:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Main Style Sheet -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Global Full-Screen 3D WebGL Canvas Background -->
+    <canvas id="global-3d-bg"></canvas>
+
+    <!-- Header Navigation -->
+    <header class="main-header">
+        <div class="header-container">
+            <div class="logo" id="headerLogo">
+                <span class="logo-accent">REP</span>NOXX
+            </div>
+            <nav class="nav-links">
+                <button class="nav-btn active" data-tab="dashboard">
+                    <i class="fa-solid fa-gauge-high"></i> War Room
+                </button>
+                <button class="nav-btn" data-tab="gym-workout">
+                    <i class="fa-solid fa-dumbbell"></i> Iron Temple
+                </button>
+                <button class="nav-btn" data-tab="home-workout">
+                    <i class="fa-solid fa-house-chimney"></i> Bodyweight Arena
+                </button>
+                <button class="nav-btn" data-tab="diets">
+                    <i class="fa-solid fa-apple-whole"></i> Anabolic Kitchen
+                </button>
+                <button class="nav-btn" data-tab="progress">
+                    <i class="fa-solid fa-chart-line"></i> Progress Hub
+                </button>
+            </nav>
+            <div class="header-actions">
+                <button id="loginBtn" class="login-btn" title="Sign in to sync data">
+                    <i class="fa-solid fa-user-circle"></i> <span id="loginBtnText">Sign In</span>
+                </button>
+                <a href="https://www.instagram.com/repnoxx?igsh=NHYydTBwNnR6N3g=" target="_blank" class="insta-cta-btn">
+                    <i class="fa-brands fa-instagram"></i> Follow @repnoxx
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="main-content container">
+
+        <!-- DASHBOARD TAB -->
+        <section id="dashboard" class="tab-content active">
+            <!-- Hero Banner -->
+            <div class="hero-banner card reveal-3d animate-slide-up">
+                <canvas id="hero-3d-canvas" class="hero-canvas"></canvas>
+                <div class="hero-text">
+                    <h1 class="hero-title">REP<span class="text-glow">NOXX</span> IRON BASE</h1>
+                    <p class="hero-subtitle" id="dailyQuote">"The only bad workout is the one that didn't happen."</p>
+                </div>
+                <div class="hero-stats">
+                    <div class="hero-stat-card">
+                        <div class="stat-icon"><i class="fa-solid fa-fire"></i></div>
+                        <div class="stat-details">
+                            <span class="stat-label">Logged Calories</span>
+                            <span class="stat-value" id="heroCalVal">0 / 2500 kcal</span>
+                        </div>
+                    </div>
+                    <div class="hero-stat-card">
+                        <div class="stat-icon"><i class="fa-solid fa-egg"></i></div>
+                        <div class="stat-details">
+                            <span class="stat-label">Logged Protein</span>
+                            <span class="stat-value" id="heroProtVal">0 / 150 g</span>
+                        </div>
+                    </div>
+                    <div class="hero-stat-card">
+                        <div class="stat-icon"><i class="fa-solid fa-calendar-check"></i></div>
+                        <div class="stat-details">
+                            <span class="stat-label">Today's Date</span>
+                            <span class="stat-value" id="heroDateVal">—</span>
+                        </div>
+                    </div>
+                    <div class="hero-stat-card">
+                        <div class="stat-icon"><i class="fa-solid fa-weight-scale"></i></div>
+                        <div class="stat-details">
+                            <span class="stat-label">Last Weight</span>
+                            <span class="stat-value" id="heroWeightVal">—</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tracking Ring Section -->
+            <div class="dashboard-grid">
+                <!-- Trackers Rings -->
+                <div class="card tracking-card reveal-3d animate-slide-up">
+                    <h2 class="section-title"><i class="fa-solid fa-gauge-high text-cyan"></i> Daily Goals Summary</h2>
+                    <div class="rings-container">
+                        <!-- Calorie Ring -->
+                        <div class="progress-ring-box">
+                            <svg class="progress-ring" width="160" height="160">
+                                <defs>
+                                    <linearGradient id="calGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+                                        <stop offset="0%" stop-color="#ff3300" />
+                                        <stop offset="100%" stop-color="#FF9933" />
+                                    </linearGradient>
+                                </defs>
+                                <circle class="progress-ring-bg" stroke="rgba(255, 255, 255, 0.04)" stroke-width="12" fill="transparent" r="65" cx="80" cy="80"/>
+                                <circle id="calRing" class="progress-ring-bar" stroke="url(#calGrad)" stroke-width="12" stroke-linecap="round" fill="transparent" r="65" cx="80" cy="80" stroke-dasharray="408.4" stroke-dashoffset="408.4"/>
+                            </svg>
+                            <div class="ring-label-box">
+                                <span class="ring-percentage" id="calPct">0%</span>
+                                <span class="ring-desc">Calories</span>
+                            </div>
+                        </div>
+
+                        <!-- Protein Ring -->
+                        <div class="progress-ring-box">
+                            <svg class="progress-ring" width="160" height="160">
+                                <defs>
+                                    <linearGradient id="protGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+                                        <stop offset="0%" stop-color="#888888" />
+                                        <stop offset="100%" stop-color="#ffffff" />
+                                    </linearGradient>
+                                </defs>
+                                <circle class="progress-ring-bg" stroke="rgba(255, 255, 255, 0.04)" stroke-width="12" fill="transparent" r="65" cx="80" cy="80"/>
+                                <circle id="protRing" class="progress-ring-bar" stroke="url(#protGrad)" stroke-width="12" stroke-linecap="round" fill="transparent" r="65" cx="80" cy="80" stroke-dasharray="408.4" stroke-dashoffset="408.4"/>
+                            </svg>
+                            <div class="ring-label-box">
+                                <span class="ring-percentage" id="protPct">0%</span>
+                                <span class="ring-desc">Protein</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="goals-settings-summary">
+                        <p>Target: <strong id="summaryCalTarget">2500</strong> kcal | <strong id="summaryProtTarget">150</strong>g Protein</p>
+                    </div>
+                </div>
+
+                <!-- Add Meal / Log Form -->
+                <div class="card reveal-3d animate-slide-up" style="animation-delay: 0.1s;">
+                    <h2 class="section-title"><i class="fa-solid fa-circle-plus text-volt"></i> Log Anabolic Intake</h2>
+                    <form id="foodLogForm" class="premium-form">
+                        <div class="form-group">
+                            <label for="foodName"><i class="fa-solid fa-utensils"></i> Food Source / Protein Shake</label>
+                            <input type="text" id="foodName" placeholder="e.g. Oats with Whey, Grilled Chicken" required>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="foodCalories"><i class="fa-solid fa-fire-flame-simple"></i> Calories (kcal)</label>
+                                <input type="number" id="foodCalories" placeholder="450" required min="0">
+                            </div>
+                            <div class="form-group">
+                                <label for="foodProtein"><i class="fa-solid fa-egg"></i> Protein (g)</label>
+                                <input type="number" id="foodProtein" placeholder="30" required min="0">
+                            </div>
+                        </div>
+                        <div class="form-actions-row">
+                            <button type="submit" class="submit-btn glow-btn">
+                                <i class="fa-solid fa-bolt"></i> Log to REPNOXX Tracker
+                            </button>
+                            <button type="button" id="aiScannerBtn" class="ai-scan-btn">
+                                <i class="fa-solid fa-camera"></i> <i class="fa-solid fa-brain"></i> AI Food Scanner
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- TDEE Calculator & Food Logs -->
+            <div class="dashboard-grid second-row">
+                <!-- Daily Logs List -->
+                <div class="card reveal-3d animate-slide-up" style="animation-delay: 0.2s;">
+                    <div class="card-header-flex">
+                        <h2 class="section-title"><i class="fa-solid fa-clipboard-list text-cyan"></i> Logged Meals</h2>
+                        <button id="clearLogsBtn" class="clear-btn-text"><i class="fa-solid fa-trash-can"></i> Clear All</button>
+                    </div>
+                    <div class="meals-log-list" id="mealsLogList">
+                        <div class="empty-state">
+                            <i class="fa-solid fa-cookie-bite"></i>
+                            <p>No meals logged today. Fuel the REPNOXX machine!</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- BMR / TDEE Calculator -->
+                <div class="card reveal-3d animate-slide-up" style="animation-delay: 0.3s;">
+                    <h2 class="section-title"><i class="fa-solid fa-calculator text-volt"></i> REPNOXX Calorie/Protein Calculator</h2>
+                    <div class="tdee-intro">
+                        <p>Calculate your daily energy requirements and set your targets instantly.</p>
+                    </div>
+                    <form id="calculatorForm" class="premium-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="calcGender">Gender</label>
+                                <select id="calcGender">
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="calcAge">Age (Years)</label>
+                                <input type="number" id="calcAge" placeholder="25" min="10" max="100" value="25" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="calcWeight">Weight (kg)</label>
+                                <input type="number" id="calcWeight" placeholder="70" min="30" max="250" value="70" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="calcHeight">Height (cm)</label>
+                                <input type="number" id="calcHeight" placeholder="175" min="100" max="250" value="175" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="calcActivity">Activity Level</label>
+                            <select id="calcActivity">
+                                <option value="1.2">Sedentary (Little or no exercise)</option>
+                                <option value="1.375">Lightly Active (Light exercise 1-3 days/week)</option>
+                                <option value="1.55">Moderately Active (Moderate exercise 3-5 days/week)</option>
+                                <option value="1.725" selected>Very Active (Hard exercise 6-7 days/week)</option>
+                                <option value="1.9">Extra Active (Very hard daily workout/physical job)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="calcGoal">Fitness Goal</label>
+                            <select id="calcGoal">
+                                <option value="cut">Fat Loss (Caloric Deficit)</option>
+                                <option value="maintain">Maintenance (Stay Fit)</option>
+                                <option value="bulk" selected>Muscle Gain (Caloric Surplus)</option>
+                            </select>
+                        </div>
+                        <button type="button" id="calculateMacrosBtn" class="submit-btn outline-btn">
+                            <i class="fa-solid fa-compass"></i> Calculate Macros
+                        </button>
+                    </form>
+                    
+                    <!-- Calculated Outputs (Hidden initially, slides down) -->
+                    <div id="calcResultsBox" class="calc-results-box hidden">
+                        <hr class="card-divider">
+                        <h3 class="results-header">Calculated Targets</h3>
+                        <div class="results-grid">
+                            <div class="result-item">
+                                <span class="result-number" id="resultCalories">2800</span>
+                                <span class="result-label">Target Calories (kcal)</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="result-number" id="resultProtein">165</span>
+                                <span class="result-label">Target Protein (g)</span>
+                            </div>
+                        </div>
+                        <button id="applyTargetsBtn" class="apply-btn glow-btn">
+                            <i class="fa-solid fa-check-double"></i> Set as My Daily Targets
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- How To Complete Guide Section -->
+            <div class="card reveal-3d animate-slide-up" style="margin-top: 30px;">
+                <h2 class="section-title"><i class="fa-solid fa-circle-question text-cyan"></i> How to Complete Your Calories & Protein Goals</h2>
+                <p class="guide-subtitle">Fulfilling nutrition goals is crucial for physical transformation. Follow these REPNOXX guidelines:</p>
+                <div class="guide-accordion-grid">
+                    <!-- Calorie Accordion Card -->
+                    <div class="guide-card">
+                        <h3 class="guide-header"><i class="fa-solid fa-fire cal-color"></i> Completing Calories</h3>
+                        <div class="guide-content">
+                            <div class="diet-tier-pill veg-tag">Veg Focus</div>
+                            <ul class="guide-list">
+                                <li><strong>Liquid Calories:</strong> Nut butters, oats, whey protein, banana and whole milk blended together make a quick 800+ calorie shake.</li>
+                                <li><strong>Healthy Fats:</strong> Almonds, walnuts, cashews, chia seeds, and pumpkin seeds are calorie-dense.</li>
+                                <li><strong>Dairy & Soy:</strong> Full-fat paneer, cheese, and tofu provide healthy fats and carbs.</li>
+                                <li><strong>Grains:</strong> Rice, sweet potatoes, oats, and quinoa are easy to digest in large quantities.</li>
+                            </ul>
+                            <div class="diet-tier-pill nonveg-tag">Non-Veg Focus</div>
+                            <ul class="guide-list">
+                                <li><strong>Whole Eggs:</strong> Rich in healthy fats and high-quality protein. Do not throw away the yolks!</li>
+                                <li><strong>Fatty Fish:</strong> Salmon and mackerel are high in calories and Omega-3 fatty acids.</li>
+                                <li><strong>Red Meats:</strong> Minced beef, mutton, and chicken thighs contain more calories than chicken breast.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Protein Accordion Card -->
+                    <div class="guide-card">
+                        <h3 class="guide-header"><i class="fa-solid fa-egg prot-color"></i> Completing Protein</h3>
+                        <div class="guide-content">
+                            <div class="diet-tier-pill veg-tag">Veg Focus</div>
+                            <ul class="guide-list">
+                                <li><strong>Dairy:</strong> Low-fat paneer, Greek yogurt, curd, and cow milk are excellent vegetarian sources.</li>
+                                <li><strong>Soya Chunks:</strong> 100g of soya chunks contains an incredible ~52g of protein. Highly anabolic!</li>
+                                <li><strong>Legumes & Lentils:</strong> Chickpeas, kidney beans, black lentils, and edamame.</li>
+                                <li><strong>Whey Protein:</strong> Use 1-2 scoops of high-quality whey isolate or concentrate daily.</li>
+                            </ul>
+                            <div class="diet-tier-pill nonveg-tag">Non-Veg Focus</div>
+                            <ul class="guide-list">
+                                <li><strong>Chicken Breast:</strong> The gold standard. 100g of raw chicken breast contains ~23g protein and is super lean.</li>
+                                <li><strong>Egg Whites:</strong> Low calorie, high volume protein source. Add 5-6 egg whites to your breakfast.</li>
+                                <li><strong>Lean Fish:</strong> Tuna, cod, and tilapia are packed with high biological value protein.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- GYM WORKOUTS TAB -->
+        <section id="gym-workout" class="tab-content">
+            <div class="page-title-box card animate-slide-up">
+                <h1 class="hero-title">REP<span class="text-glow">NOXX</span> GYM MANUAL</h1>
+                <p class="hero-subtitle">Full system routines optimized for progressive overload.</p>
+                <div class="filter-container">
+                    <span class="filter-label"><i class="fa-solid fa-filter"></i> Category:</span>
+                    <div class="filter-buttons" id="gymFilters">
+                        <button class="filter-btn active" data-filter="all">All</button>
+                        <button class="filter-btn" data-filter="Chest & Triceps">Chest & Triceps</button>
+                        <button class="filter-btn" data-filter="Back & Biceps">Back & Biceps</button>
+                        <button class="filter-btn" data-filter="Shoulders & Abs">Shoulders & Abs</button>
+                        <button class="filter-btn" data-filter="Legs">Legs</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gym Workout Cards Grid -->
+            <div class="workouts-grid" id="gymWorkoutsGrid">
+                <!-- Populated dynamically via app.js -->
+            </div>
+        </section>
+
+        <!-- HOME WORKOUTS TAB -->
+        <section id="home-workout" class="tab-content">
+            <div class="page-title-box card animate-slide-up">
+                <h1 class="hero-title">REP<span class="text-glow">NOXX</span> HOME COMBAT</h1>
+                <p class="hero-subtitle">Bodyweight workouts to incinerate fat and build functional muscle at home.</p>
+            </div>
+
+            <!-- Home Workout Cards Grid -->
+            <div class="workouts-grid" id="homeWorkoutsGrid">
+                <!-- Populated dynamically via app.js -->
+            </div>
+        </section>
+
+        <!-- DIETS TAB -->
+        <section id="diets" class="tab-content">
+            <div class="page-title-box card animate-slide-up">
+                <h1 class="hero-title">REP<span class="text-glow">NOXX</span> NUTRITION CODES</h1>
+                <p class="hero-subtitle">Select your baseline lifestyle diet program below.</p>
+                <div class="diet-tabs-header">
+                    <button class="diet-tab-btn active" id="vegTabToggle">
+                        <i class="fa-solid fa-leaf text-volt"></i> Complete Veg Diet
+                    </button>
+                    <button class="diet-tab-btn" id="nonvegTabToggle">
+                        <i class="fa-solid fa-drumstick-bite text-cyan"></i> Complete Non-Veg Diet
+                    </button>
+                </div>
+            </div>
+
+            <!-- Diet Plans Displays -->
+            <div class="diet-content-box">
+                <!-- Vegetarian Section -->
+                <div id="vegDietContainer" class="diet-sub-content active animate-fade-in">
+                    <div class="diet-intro-card card">
+                        <h2 class="diet-plan-title"><i class="fa-solid fa-leaf text-volt"></i> REPNOXX Vegetarian Fueling</h2>
+                        <p>Fully optimized plant-based foods, dairy, and soy combinations to meet macros. High protein, high energy, clean carbs.</p>
+                    </div>
+                    <div class="diet-meals-grid" id="vegMealsGrid">
+                        <!-- Populated dynamically -->
+                    </div>
+                </div>
+
+                <!-- Non-Vegetarian Section -->
+                <div id="nonvegDietContainer" class="diet-sub-content animate-fade-in">
+                    <div class="diet-intro-card card">
+                        <h2 class="diet-plan-title"><i class="fa-solid fa-drumstick-bite text-cyan"></i> REPNOXX Lean Beast Non-Veg Fueling</h2>
+                        <p>Premium animal protein combined with clean complex carbs and essential fats. High biological value proteins for rapid recovery.</p>
+                    </div>
+                    <div class="diet-meals-grid" id="nonvegMealsGrid">
+                        <!-- Populated dynamically -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PROGRESS HUB TAB -->
+        <section id="progress" class="tab-content">
+            <div class="page-title-box card animate-slide-up">
+                <h1 class="hero-title">REP<span class="text-glow">NOXX</span> PROGRESS HUB</h1>
+                <p class="hero-subtitle">Track workouts, measurements, achievements & more.</p>
+            </div>
+
+            <div class="progress-tabs">
+                <button class="progress-tab active" data-ptab="logger"><i class="fa-solid fa-dumbbell"></i> Workout Log</button>
+                <button class="progress-tab" data-ptab="measurements"><i class="fa-solid fa-ruler"></i> Measurements</button>
+                <button class="progress-tab" data-ptab="photos"><i class="fa-solid fa-camera"></i> Progress Pics</button>
+                <button class="progress-tab" data-ptab="onerm"><i class="fa-solid fa-bolt"></i> 1RM Calc</button>
+                <button class="progress-tab" data-ptab="badges"><i class="fa-solid fa-trophy"></i> Achievements</button>
+            </div>
+
+            <!-- Workout Logger -->
+            <div class="progress-pane active" id="ppane-logger">
+                <div class="card">
+                    <h3 class="section-title"><i class="fa-solid fa-circle-plus text-volt"></i> Log Your Workout</h3>
+                    <div class="logger-form">
+                        <select id="logExercise" class="log-input"></select>
+                        <div class="log-row">
+                            <input type="number" id="logSets" placeholder="Sets" class="log-input half" min="1" value="3">
+                            <input type="number" id="logReps" placeholder="Reps" class="log-input half" min="1" value="10">
+                        </div>
+                        <div class="log-row">
+                            <input type="number" id="logWeight" placeholder="Weight (kg)" class="log-input half" min="0" step="0.5">
+                            <button id="logWorkoutBtn" class="log-submit-btn"><i class="fa-solid fa-check"></i> Log Set</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card" style="margin-top:14px;">
+                    <h3 class="section-title"><i class="fa-solid fa-clock-rotate-left text-cyan"></i> Workout History</h3>
+                    <div class="log-history" id="logHistory">No workouts logged yet. Start tracking your progress!</div>
+                </div>
+            </div>
+
+            <!-- Body Measurements -->
+            <div class="progress-pane" id="ppane-measurements">
+                <div class="card">
+                    <h3 class="section-title"><i class="fa-solid fa-ruler-combined text-volt"></i> Body Measurements</h3>
+                    <div class="measure-form">
+                        <div class="measure-row">
+                            <label>Waist (cm)</label>
+                            <input type="number" id="measWaist" step="0.1" min="0" placeholder="84">
+                        </div>
+                        <div class="measure-row">
+                            <label>Chest (cm)</label>
+                            <input type="number" id="measChest" step="0.1" min="0" placeholder="100">
+                        </div>
+                        <div class="measure-row">
+                            <label>Arms (cm)</label>
+                            <input type="number" id="measArms" step="0.1" min="0" placeholder="35">
+                        </div>
+                        <div class="measure-row">
+                            <label>Thighs (cm)</label>
+                            <input type="number" id="measThighs" step="0.1" min="0" placeholder="55">
+                        </div>
+                        <div class="measure-row">
+                            <label>Weight (kg)</label>
+                            <input type="number" id="measWeight" step="0.1" min="0" placeholder="75">
+                        </div>
+                        <button id="saveMeasureBtn" class="submit-btn glow-btn"><i class="fa-solid fa-floppy-disk"></i> Save Measurements</button>
+                    </div>
+                </div>
+                <div class="card" style="margin-top:14px;">
+                    <h3 class="section-title"><i class="fa-solid fa-chart-simple text-cyan"></i> Measurement History</h3>
+                    <div class="meas-chart-container" id="measChartContainer">
+                        <canvas id="measChart"></canvas>
+                    </div>
+                    <div class="meas-history" id="measHistory"></div>
+                </div>
+            </div>
+
+            <!-- Progress Photos -->
+            <div class="progress-pane" id="ppane-photos">
+                <div class="card">
+                    <h3 class="section-title"><i class="fa-solid fa-camera-retro text-volt"></i> Progress Photos</h3>
+                    <p style="font-size:12px;color:rgba(255,255,255,0.4);margin-bottom:12px;">Upload progress photos to see your transformation over time.</p>
+                    <div class="photo-upload-row">
+                        <input type="file" id="progressPhotoInput" accept="image/*" hidden>
+                        <button id="uploadPhotoBtn" class="submit-btn glow-btn"><i class="fa-solid fa-cloud-arrow-up"></i> Add Progress Photo</button>
+                    </div>
+                    <div class="photo-grid" id="photoGrid"></div>
+                </div>
+            </div>
+
+            <!-- 1RM Calculator -->
+            <div class="progress-pane" id="ppane-onerm">
+                <div class="card">
+                    <h3 class="section-title"><i class="fa-solid fa-bolt text-volt"></i> One-Rep Max Calculator</h3>
+                    <p style="font-size:12px;color:rgba(255,255,255,0.4);margin-bottom:12px;">Estimate your 1RM from any weight & rep count.</p>
+                    <div class="rm-form">
+                        <div class="log-row">
+                            <input type="number" id="rmWeight" placeholder="Weight used (kg)" class="log-input half" min="0" step="0.5">
+                            <input type="number" id="rmReps" placeholder="Reps performed" class="log-input half" min="1" max="30" value="8">
+                        </div>
+                        <button id="calcRmBtn" class="log-submit-btn"><i class="fa-solid fa-calculator"></i> Calculate</button>
+                    </div>
+                    <div class="rm-result" id="rmResult" style="display:none;"></div>
+                </div>
+            </div>
+
+            <!-- Achievements / Badges -->
+            <div class="progress-pane" id="ppane-badges">
+                <div class="card">
+                    <h3 class="section-title"><i class="fa-solid fa-trophy text-volt"></i> Achievements</h3>
+                    <p style="font-size:12px;color:rgba(255,255,255,0.4);margin-bottom:14px;">Complete milestones to unlock badges. Stay consistent!</p>
+                    <div class="badges-grid" id="badgesGrid"></div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer Area -->
+    <footer class="main-footer">
+        <div class="footer-container">
+            <div class="footer-logo" id="footerSecretLogo">
+                <span class="logo-accent">REP</span>NOXX
+            </div>
+            <p class="footer-text">Built for elite performance. Follow the revolution on Instagram.</p>
+            <div class="footer-insta">
+                <a href="https://www.instagram.com/repnoxx?igsh=NHYydTBwNnR6N3g=" target="_blank" class="footer-insta-link">
+                    <i class="fa-brands fa-instagram"></i> @repnoxx
+                </a>
+            </div>
+            <p class="copyright">© 2026 REPNOXX. ALL RIGHTS RESERVED. <span class="hidden-admin-note">(Double-click Header Logo to unlock Admin portal)</span></p>
+        </div>
+    </footer>
+
+    <!-- ==================== MODALS ==================== -->
+
+    <!-- Admin Login Modal -->
+    <div class="modal" id="adminLoginModal">
+        <div class="modal-content glass-card animate-scale-up">
+            <button class="modal-close" id="closeLoginModal">&times;</button>
+            <div class="modal-header">
+                <h2 class="logo"><span class="logo-accent">REP</span>NOXX ADMIN AUTH</h2>
+                <p>Authorize access to control database structures.</p>
+            </div>
+            <form id="adminLoginForm" class="premium-form">
+                <div class="form-group">
+                    <label for="adminPassword"><i class="fa-solid fa-key text-volt"></i> Enter Access Key</label>
+                    <input type="password" id="adminPassword" placeholder="••••" required autofocus>
+                </div>
+                <button type="submit" class="submit-btn glow-btn">
+                    <i class="fa-solid fa-unlock-keyhole"></i> Decrypt Portal
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Admin Control Panel Modal -->
+    <div class="modal large-modal" id="adminControlPanelModal">
+        <div class="modal-content glass-card animate-scale-up">
+            <button class="modal-close" id="closeAdminPanelModal">&times;</button>
+            <div class="admin-panel-layout">
+                <!-- Sidebar -->
+                <aside class="admin-sidebar">
+                    <div class="admin-brand">
+                        <h2>REP<span class="text-glow">NOXX</span> CTRL</h2>
+                    </div>
+                    <ul class="admin-nav-links">
+                        <li><button class="admin-nav-btn active" data-admin-panel="global-settings"><i class="fa-solid fa-sliders"></i> Global Settings</button></li>
+                        <li><button class="admin-nav-btn" data-admin-panel="manage-gym"><i class="fa-solid fa-dumbbell"></i> Gym Workouts</button></li>
+                        <li><button class="admin-nav-btn" data-admin-panel="manage-home"><i class="fa-solid fa-house-user"></i> Home Workouts</button></li>
+                        <li><button class="admin-nav-btn" data-admin-panel="manage-veg-diet"><i class="fa-solid fa-leaf"></i> Veg Diets</button></li>
+                        <li><button class="admin-nav-btn" data-admin-panel="manage-nonveg-diet"><i class="fa-solid fa-drumstick-bite"></i> Non-Veg Diets</button></li>
+                        <li><button class="admin-nav-btn" data-admin-panel="security-settings"><i class="fa-solid fa-shield-halved"></i> Security</button></li>
+                    </ul>
+                </aside>
+
+                <!-- Core Workspace -->
+                <main class="admin-workspace">
+                    
+                    <!-- GLOBAL SETTINGS -->
+                    <div class="admin-section active" id="admin-global-settings">
+                        <h2>Global Target Settings</h2>
+                        <p class="section-desc">Change the default daily target macros for all users.</p>
+                        <hr class="card-divider">
+                        <form id="adminGlobalTargetsForm" class="premium-form">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="adminCalTarget">Default Calories Target (kcal)</label>
+                                    <input type="number" id="adminCalTarget" value="2500" required min="1000" max="6000">
+                                </div>
+                                <div class="form-group">
+                                    <label for="adminProtTarget">Default Protein Target (g)</label>
+                                    <input type="number" id="adminProtTarget" value="150" required min="50" max="400">
+                                </div>
+                            </div>
+                            <button type="submit" class="submit-btn glow-btn">
+                                <i class="fa-solid fa-floppy-disk"></i> Save Targets
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- MANAGE GYM WORKOUTS -->
+                    <div class="admin-section" id="admin-manage-gym">
+                        <div class="flex-title-row">
+                            <h2>Manage Gym Workouts</h2>
+                            <button class="add-new-btn glow-btn" id="openAddGymBtn"><i class="fa-solid fa-circle-plus"></i> Add Exercise</button>
+                        </div>
+                        <p class="section-desc">Create, modify or remove exercises under Gym Workout category.</p>
+                        <hr class="card-divider">
+                        <div class="admin-list-table" id="adminGymList">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+
+                    <!-- MANAGE HOME WORKOUTS -->
+                    <div class="admin-section" id="admin-manage-home">
+                        <div class="flex-title-row">
+                            <h2>Manage Home Workouts</h2>
+                            <button class="add-new-btn glow-btn" id="openAddHomeBtn"><i class="fa-solid fa-circle-plus"></i> Add Exercise</button>
+                        </div>
+                        <p class="section-desc">Create, modify or remove exercises under Home Workout category.</p>
+                        <hr class="card-divider">
+                        <div class="admin-list-table" id="adminHomeList">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+
+                    <!-- MANAGE VEG DIETS -->
+                    <div class="admin-section" id="admin-manage-veg-diet">
+                        <div class="flex-title-row">
+                            <h2>Manage Vegetarian Diets</h2>
+                            <button class="add-new-btn glow-btn" id="openAddVegDietBtn"><i class="fa-solid fa-circle-plus"></i> Add Meal</button>
+                        </div>
+                        <p class="section-desc">Create, modify or remove meals inside Vegetarian Nutrition catalog.</p>
+                        <hr class="card-divider">
+                        <div class="admin-list-table" id="adminVegDietList">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+
+                    <!-- MANAGE NON-VEG DIETS -->
+                    <div class="admin-section" id="admin-manage-nonveg-diet">
+                        <div class="flex-title-row">
+                            <h2>Manage Non-Vegetarian Diets</h2>
+                            <button class="add-new-btn glow-btn" id="openAddNonVegDietBtn"><i class="fa-solid fa-circle-plus"></i> Add Meal</button>
+                        </div>
+                        <p class="section-desc">Create, modify or remove meals inside Non-Vegetarian Nutrition catalog.</p>
+                        <hr class="card-divider">
+                        <div class="admin-list-table" id="adminNonVegDietList">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+
+                    <!-- SECURITY & RESET -->
+                    <div class="admin-section" id="admin-security-settings">
+                        <h2>Admin Security & Recovery</h2>
+                        <p class="section-desc">Manage system access passwords and factory state resets.</p>
+                        <hr class="card-divider">
+                        
+                        <!-- Change Pass Form -->
+                        <form id="adminChangePassForm" class="premium-form" style="margin-bottom: 30px;">
+                            <h3>Change Admin Password</h3>
+                            <div class="form-group">
+                                <label for="oldPass">Current Password</label>
+                                <input type="password" id="oldPass" placeholder="e.g. 2138" required>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="newPass">New Password</label>
+                                    <input type="password" id="newPass" placeholder="Enter new key" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="confirmNewPass">Confirm New Password</label>
+                                    <input type="password" id="confirmNewPass" placeholder="Repeat new key" required>
+                                </div>
+                            </div>
+                            <button type="submit" class="submit-btn outline-btn">
+                                <i class="fa-solid fa-key"></i> Update Secret Password
+                            </button>
+                        </form>
+
+                        <hr class="card-divider">
+                        <!-- Factory Reset -->
+                        <div class="factory-reset-section">
+                            <h3>Factory Reset REPNOXX Catalog</h3>
+                            <p>Clearing all stored edits and resets default built-in workouts, guides, diets, and goals logs.</p>
+                            <button id="factoryResetSystemBtn" class="reset-btn-danger">
+                                <i class="fa-solid fa-triangle-exclamation"></i> Reinitialize Catalog Data
+                            </button>
+                        </div>
+                    </div>
+
+                </main>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Exercise Modal (Shared for Gym/Home additions and edits) -->
+    <div class="modal" id="exerciseEditModal">
+        <div class="modal-content glass-card animate-scale-up">
+            <button class="modal-close" id="closeExerciseModal">&times;</button>
+            <div class="modal-header">
+                <h2 id="exerciseModalTitle">Add Exercise</h2>
+                <p id="exerciseModalDesc">Enter workout target specifications.</p>
+            </div>
+            <form id="exerciseEditForm" class="premium-form">
+                <!-- Hidden inputs -->
+                <input type="hidden" id="editExId">
+                <input type="hidden" id="editExType"> <!-- 'gym' or 'home' -->
+                
+                <div class="form-group">
+                    <label for="editExName">Exercise Name</label>
+                    <input type="text" id="editExName" placeholder="e.g. Incline Bench Press" required>
+                </div>
+                <div class="form-row" id="exCategoryRow">
+                    <div class="form-group">
+                        <label for="editExCategory">Category (For Gym)</label>
+                        <select id="editExCategory">
+                            <option value="Chest & Triceps">Chest & Triceps</option>
+                            <option value="Back & Biceps">Back & Biceps</option>
+                            <option value="Shoulders & Abs">Shoulders & Abs</option>
+                            <option value="Legs">Legs</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="editExSets">Target Sets</label>
+                        <input type="number" id="editExSets" placeholder="4" required min="1">
+                    </div>
+                    <div class="form-group">
+                        <label for="editExReps">Target Reps</label>
+                        <input type="text" id="editExReps" placeholder="e.g. 10-12 or 15" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="editExYoutube">YouTube Video Link or ID</label>
+                    <input type="text" id="editExYoutube" placeholder="e.g. rT7DgCrgWys or full watch URL">
+                </div>
+                <button type="submit" class="submit-btn glow-btn">
+                    <i class="fa-solid fa-floppy-disk"></i> Save Exercise
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Edit Meal Modal (Shared for Veg/NonVeg additions and edits) -->
+    <div class="modal" id="mealEditModal">
+        <div class="modal-content glass-card animate-scale-up">
+            <button class="modal-close" id="closeMealModal">&times;</button>
+            <div class="modal-header">
+                <h2 id="mealModalTitle">Add Meal</h2>
+                <p id="mealModalDesc">Enter nutritional meal parameters.</p>
+            </div>
+            <form id="mealEditForm" class="premium-form">
+                <!-- Hidden inputs -->
+                <input type="hidden" id="editMealId">
+                <input type="hidden" id="editMealType"> <!-- 'veg' or 'nonveg' -->
+                
+                <div class="form-group">
+                    <label for="editMealName">Meal Number / Title</label>
+                    <input type="text" id="editMealName" placeholder="e.g. Meal 1 - Breakfast" required>
+                </div>
+                <div class="form-group">
+                    <label for="editMealDetails">Ingredients / Details</label>
+                    <textarea id="editMealDetails" placeholder="e.g. Oatmeal with chia seeds, banana and milk..." required rows="3"></textarea>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="editMealCalories">Calories (kcal)</label>
+                        <input type="number" id="editMealCalories" placeholder="450" required min="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="editMealProtein">Protein (g)</label>
+                        <input type="number" id="editMealProtein" placeholder="25" required min="0">
+                    </div>
+                </div>
+                <button type="submit" class="submit-btn glow-btn">
+                    <i class="fa-solid fa-floppy-disk"></i> Save Meal Card
+                </button>
+            </form>
+        </div>
+    </div>
+
+
+    <!-- Video Guide Modal -->
+    <div class="modal" id="videoModal">
+        <div class="modal-content" id="videoModalContent" style="max-width: 820px; width: 92%; padding: 28px; position: relative; background: rgba(10,14,24,0.96); border: 1px solid rgba(255,255,255,0.06); border-top: 3px solid #FF0000; border-radius: 20px; box-shadow: 0 30px 80px rgba(0,0,0,0.5);">
+            <button class="modal-close" id="closeVideoModal" style="position:absolute; top:16px; right:20px; background:transparent; border:none; color:rgba(255,255,255,0.3); font-size:32px; cursor:pointer; line-height:1; z-index:10;">&times;</button>
+            
+            <div style="margin-bottom: 18px;">
+                <h2 id="videoModalTitle" style="font-family: 'Inter', sans-serif; font-size: 18px; font-weight: 600; color:#ffffff; margin-bottom: 6px;">
+                    <i class="fa-solid fa-circle-play" style="color:#FF0000;"></i> Exercise Guide
+                </h2>
+                <p style="font-size:12px; color:rgba(255,255,255,0.4);">Watch proper form and technique before you lift.</p>
+            </div>
+
+            <!-- YouTube Iframe Player -->
+            <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 10px; background: #000;">
+                <iframe 
+                    id="videoPlayer"
+                    src=""
+                    title="Exercise Tutorial"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowfullscreen
+                    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 10px; border: none;">
+                </iframe>
+            </div>
+
+            <!-- Fallback: Open on YouTube button -->
+            <div style="margin-top: 16px; display: flex; gap: 12px; align-items: center; justify-content: space-between; flex-wrap: wrap;">
+                <span style="font-size:12px; color:rgba(255,255,255,0.4);">
+                    <i class="fa-solid fa-circle-info"></i> If video doesn't play, open directly on YouTube:
+                </span>
+                <a id="openOnYoutube" href="#" target="_blank" rel="noopener noreferrer"
+                   style="display:inline-flex; align-items:center; gap:8px; background:#FF0000; color:#fff; text-decoration:none; padding:10px 20px; border-radius:10px; font-size:13px; font-weight:600; letter-spacing:0.3px; transition: all 0.2s ease; box-shadow: 0 4px 20px rgba(255,0,0,0.25);">
+                    <i class="fa-brands fa-youtube" style="font-size:16px;"></i> Open on YouTube
+                </a>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- AI Food Scanner Modal -->
+    <div class="modal" id="aiScannerModal">
+        <div class="modal-content glass-card animate-scale-up" style="max-width: 640px;">
+            <button class="modal-close" id="closeAiScanner">&times;</button>
+            <div class="modal-header">
+                <h2><i class="fa-solid fa-brain text-volt"></i> REPNOXX AI Food Scanner</h2>
+                <p>Point camera at food or upload a photo. AI identifies calories & protein.</p>
+            </div>
+            <div class="scanner-body">
+                <!-- Camera / Upload Toggle -->
+                <div class="scanner-tabs">
+                    <button class="scanner-tab active" data-scanner-tab="camera"><i class="fa-solid fa-camera"></i> Live Camera</button>
+                    <button class="scanner-tab" data-scanner-tab="upload"><i class="fa-solid fa-image"></i> Upload Photo</button>
+                </div>
+
+                <!-- Camera View -->
+                <div class="scanner-pane active" id="scannerCameraPane">
+                    <div class="camera-view-box">
+                        <video id="aiVideo" autoplay playsinline></video>
+                        <canvas id="aiCanvas" style="display:none;"></canvas>
+                        <div class="camera-overlay" id="cameraOverlay">
+                            <div class="scan-frame">
+                                <i class="fa-solid fa-utensils scan-icon"></i>
+                            </div>
+                            <div class="scan-line"></div>
+                        </div>
+                        <button id="quickAddFab" class="quick-add-fab" title="Quick Add Meal">
+                            <i class="fa-solid fa-bolt"></i>
+                        </button>
+                        <!-- Quick Add Popup -->
+                        <div class="quick-add-popup" id="quickAddPopup">
+                            <div class="quick-add-header">
+                                <span><i class="fa-solid fa-bolt text-volt"></i> Quick Add</span>
+                                <button id="closeQuickAdd" class="quick-add-close">&times;</button>
+                            </div>
+                            <input type="text" id="quickAddName" placeholder="Meal name (e.g. Chicken Rice)" class="quick-add-input">
+                            <div class="quick-add-row">
+                                <input type="number" id="quickAddCal" placeholder="kcal" class="quick-add-input half">
+                                <input type="number" id="quickAddProt" placeholder="protein g" class="quick-add-input half">
+                            </div>
+                            <div class="quick-add-presets">
+                                <button class="qa-preset" data-cal="300" data-prot="20">Snack</button>
+                                <button class="qa-preset" data-cal="450" data-prot="30">Meal</button>
+                                <button class="qa-preset" data-cal="600" data-prot="40">Large</button>
+                                <button class="qa-preset" data-cal="800" data-prot="50">Mass</button>
+                            </div>
+                            <button id="quickAddConfirmBtn" class="quick-add-confirm">
+                                <i class="fa-solid fa-circle-check"></i> Add Now
+                            </button>
+                        </div>
+                    </div>
+                    <button id="captureBtn" class="capture-btn">
+                        <i class="fa-solid fa-circle"></i> Capture & Analyze
+                    </button>
+                    <p class="camera-hint">Allow camera access when prompted. Hold food steady in frame.</p>
+                </div>
+
+                <!-- Upload View -->
+                <div class="scanner-pane" id="scannerUploadPane">
+                    <div class="upload-zone" id="uploadZone">
+                        <i class="fa-solid fa-cloud-arrow-up upload-icon"></i>
+                        <p>Tap to select a food photo from your device</p>
+                        <input type="file" id="foodFileInput" accept="image/*" hidden>
+                        <button id="selectPhotoBtn" class="upload-btn"><i class="fa-solid fa-folder-open"></i> Choose Photo</button>
+                    </div>
+                    <div class="upload-preview" id="uploadPreview" style="display:none;">
+                        <img id="uploadedImage" alt="Uploaded food">
+                    </div>
+                </div>
+
+                <!-- AI Results -->
+                <div class="ai-results-box" id="aiResultsBox" style="display:none;">
+                    <hr class="card-divider">
+                    <div class="ai-loading" id="aiLoading">
+                        <div class="ai-spinner"></div>
+                        <span id="aiLoadingText">AI is analyzing your food...</span>
+                    </div>
+                    <!-- Food Result -->
+                    <div class="ai-result-content" id="aiResultContent">
+                        <div class="result-badge">
+                            <i class="fa-solid fa-microchip"></i> AI Detected
+                        </div>
+                        <div class="detected-food-name" id="detectedFoodName">Grilled Chicken</div>
+                        <div class="detected-confidence" id="detectedConfidence">Confidence: 92%</div>
+                        <div class="detected-nutrition">
+                            <div class="nutrition-chip cal-chip">
+                                <i class="fa-solid fa-fire"></i>
+                                <span><strong id="detectedCalories">0</strong> kcal</span>
+                            </div>
+                            <div class="nutrition-chip prot-chip">
+                                <i class="fa-solid fa-egg"></i>
+                                <span><strong id="detectedProtein">0</strong>g protein</span>
+                            </div>
+                            <div class="nutrition-chip serving-chip">
+                                <i class="fa-solid fa-weight-scale"></i>
+                                <span id="detectedServing">Per serving</span>
+                            </div>
+                        </div>
+                        <p class="edit-hint">You can adjust values before adding:</p>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="aiEditCalories">Calories (kcal)</label>
+                                <input type="number" id="aiEditCalories" min="0">
+                            </div>
+                            <div class="form-group">
+                                <label for="aiEditProtein">Protein (g)</label>
+                                <input type="number" id="aiEditProtein" min="0">
+                            </div>
+                        </div>
+                        <button id="addAiMealBtn" class="submit-btn glow-btn">
+                            <i class="fa-solid fa-circle-check"></i> Add <span id="addBtnLabel">Meal</span>
+                        </button>
+                    </div>
+                    <!-- Body Scan Result (shown when person detected) -->
+                    <div class="ai-result-content" id="bodyResultContent" style="display:none;">
+                        <div class="result-badge" style="background:rgba(0,230,118,0.1);border-color:rgba(0,230,118,0.15);color:#00E676;">
+                            <i class="fa-solid fa-person-running"></i> Person Detected
+                        </div>
+                        <div class="detected-food-name" id="bodyDetectedLabel">Body Scan</div>
+                        <div class="detected-confidence" id="bodyConfidence">Estimating your daily metrics...</div>
+                        <div class="detected-nutrition" id="bodyMetricsDisplay">
+                            <div class="nutrition-chip cal-chip">
+                                <i class="fa-solid fa-heart-pulse"></i>
+                                <span><strong id="bodyBmrValue">0</strong> BMR kcal</span>
+                            </div>
+                            <div class="nutrition-chip prot-chip">
+                                <i class="fa-solid fa-bolt"></i>
+                                <span><strong id="bodyBurnValue">0</strong> daily kcal</span>
+                            </div>
+                            <div class="nutrition-chip serving-chip">
+                                <i class="fa-solid fa-ruler"></i>
+                                <span id="bodyEstimateLabel">Estimated from frame</span>
+                            </div>
+                        </div>
+                        <p class="edit-hint">Adjust for accurate calculation:</p>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="bodyHeight">Height (cm)</label>
+                                <input type="number" id="bodyHeight" placeholder="175" min="100" max="250">
+                            </div>
+                            <div class="form-group">
+                                <label for="bodyWeight">Weight (kg)</label>
+                                <input type="number" id="bodyWeight" placeholder="70" min="30" max="250">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="bodyAge">Age</label>
+                                <input type="number" id="bodyAge" placeholder="25" min="10" max="100">
+                            </div>
+                            <div class="form-group">
+                                <label for="bodyActivity">Activity</label>
+                                <select id="bodyActivity">
+                                    <option value="1.2">Sedentary</option>
+                                    <option value="1.375">Light</option>
+                                    <option value="1.55">Moderate</option>
+                                    <option value="1.725" selected>Very Active</option>
+                                    <option value="1.9">Extra Active</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button id="addBodyBurnBtn" class="submit-btn glow-btn">
+                            <i class="fa-solid fa-fire"></i> Log Daily Burn to Tracker
+                        </button>
+                    </div>
+                    <!-- Thali/Plate Multi-Detection Results -->
+                    <div class="thali-result" id="thaliResult" style="display:none;">
+                        <hr class="card-divider">
+                        <div class="result-badge" style="background:rgba(255,107,26,0.12);border-color:rgba(255,107,26,0.18);color:#FF6B1A;">
+                            <i class="fa-solid fa-plate-wheat"></i> Thali Scan — Multi-Item
+                        </div>
+                        <div class="thali-items" id="thaliItems"></div>
+                        <div class="thali-total">
+                            <span class="thali-total-label"><i class="fa-solid fa-calculator"></i> Meal Total</span>
+                            <span class="thali-total-value">
+                                <span class="thali-total-cal" id="thaliTotalCal">0</span> kcal ·
+                                <span class="thali-total-prot" id="thaliTotalProt">0</span>g protein
+                            </span>
+                        </div>
+                        <button id="addThaliBtn" class="submit-btn glow-btn" style="margin-top:12px;">
+                            <i class="fa-solid fa-circle-check"></i> Add All to Log
+                        </button>
+                    </div>
+                    <div class="quick-select-fallback" id="quickSelectFallback">
+                        <p class="fallback-title"><i class="fa-solid fa-hand-point-up"></i> Or tap what you're eating:</p>
+                        <div class="qs-grid" id="qsGrid"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chatbot FAB + Panel -->
+    <button id="chatFab" class="chat-fab" title="Health AI Chat">
+        <i class="fa-solid fa-comment-dots"></i>
+    </button>
+    <div class="chat-panel" id="chatPanel">
+        <div class="chat-header">
+            <span><i class="fa-solid fa-robot text-volt"></i> REPNOXX Health AI</span>
+            <button id="chatClose" class="chat-close">&times;</button>
+        </div>
+        <div class="chat-messages" id="chatMessages">
+            <div class="chat-msg bot">
+                <div class="chat-bubble">Hey! I'm your REPNOXX Health AI. Ask me anything about fitness, diet, nutrition, workouts, supplements, or recovery.</div>
+            </div>
+        </div>
+        <div class="chat-input-row">
+            <input type="text" id="chatInput" placeholder="Ask a health question..." autocomplete="off">
+            <button id="chatSendBtn"><i class="fa-solid fa-paper-plane"></i></button>
+        </div>
+        <div class="chat-suggestions" id="chatSuggestions"></div>
+    </div>
+
+    <!-- Login Modal (zero-setup) -->
+    <div class="modal" id="loginModal">
+        <div class="modal-content glass-card animate-scale-up" style="max-width:420px;text-align:center;">
+            <button class="modal-close" id="closeLoginModal">&times;</button>
+            <div class="modal-header">
+                <h2><i class="fa-solid fa-user-astronaut text-volt"></i> Your Profile</h2>
+                <p>Enter your name to set up your profile. Use Cloud Sync to move data between devices on the same network.</p>
+            </div>
+            <div class="login-body" style="padding:20px 0;">
+                <!-- Login form -->
+                <div id="loginFormSection">
+                    <div style="display:flex;flex-direction:column;gap:10px;max-width:320px;margin:0 auto;">
+                        <!-- Profile photo upload -->
+                        <div id="profilePhotoUploadArea" style="width:72px;height:72px;border-radius:50%;margin:0 auto;background:rgba(255,255,255,0.04);border:2px dashed rgba(255,255,255,0.12);display:flex;align-items:center;justify-content:center;cursor:pointer;overflow:hidden;transition:var(--transition-smooth);position:relative;">
+                            <img id="profilePhotoPreview" src="" style="width:100%;height:100%;object-fit:cover;display:none;border-radius:50%;">
+                            <i id="profilePhotoPlaceholder" class="fa-solid fa-camera" style="font-size:24px;color:rgba(255,255,255,0.25);"></i>
+                            <input type="file" id="profilePhotoInput" accept="image/*" hidden>
+                        </div>
+                        <div style="font-size:10px;color:rgba(255,255,255,0.2);margin:-4px 0 2px;">Tap to add photo (optional)</div>
+                        <input type="text" id="profileNameInput" placeholder="Your name (e.g. Raj)" style="width:100%;padding:12px 14px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;color:#fff;font-size:14px;font-family:var(--font-body);outline:none;">
+                        <input type="email" id="profileEmailInput" placeholder="Email (optional, for identification)" style="width:100%;padding:12px 14px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;color:#fff;font-size:14px;font-family:var(--font-body);outline:none;">
+                        <button id="saveProfileBtn" class="submit-btn glow-btn" style="margin-top:4px;">
+                            <i class="fa-solid fa-circle-check"></i> Save Profile
+                        </button>
+                    </div>
+                    <div style="margin-top:20px;padding-top:16px;border-top:1px solid rgba(255,255,255,0.04);">
+                        <p style="font-size:11px;color:rgba(255,255,255,0.3);margin-bottom:10px;">Move data between devices:</p>
+                        <div style="display:flex;gap:8px;justify-content:center;">
+                            <button id="exportDataBtn" class="log-submit-btn"><i class="fa-solid fa-download"></i> Export Data</button>
+                            <input type="file" id="importFileInput" accept=".json" hidden>
+                            <button id="importDataBtn" class="log-submit-btn" style="border-color:rgba(0,230,118,0.3);color:var(--volt);"><i class="fa-solid fa-upload"></i> Import Data</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Profile (when logged in) -->
+                <div id="userProfile" style="display:none;">
+                    <div style="display:flex;flex-direction:column;align-items:center;gap:6px;padding:16px;background:rgba(255,255,255,0.02);border-radius:14px;margin-bottom:14px;">
+                        <div id="userAvatarContainer" style="width:64px;height:64px;border-radius:50%;overflow:hidden;position:relative;cursor:pointer;background:linear-gradient(135deg,var(--primary),#e65a00);display:flex;align-items:center;justify-content:center;">
+                            <img id="userAvatarImg" src="" style="width:100%;height:100%;object-fit:cover;display:none;border-radius:50%;">
+                            <div id="userAvatarLetter" style="font-size:26px;font-weight:700;color:#fff;"></div>
+                            <input type="file" id="profilePhotoChangeInput" accept="image/*" hidden>
+                            <div style="position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,0.5);font-size:9px;color:#fff;padding:2px 0;text-align:center;opacity:0;transition:var(--transition-fast);">Change</div>
+                        </div>
+                        <div id="userName" style="font-weight:700;font-size:16px;color:#fff;"></div>
+                        <div id="userEmail" style="font-size:12px;color:rgba(255,255,255,0.4);"></div>
+                        <div id="syncInfo" style="font-size:11px;color:rgba(255,255,255,0.25);margin-top:4px;">Data saved locally</div>
+                    </div>
+                    <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;">
+                        <button id="exportDataBtn2" class="log-submit-btn"><i class="fa-solid fa-download"></i> Export</button>
+                        <input type="file" id="importFileInput2" accept=".json" hidden>
+                        <button id="importDataBtn2" class="log-submit-btn" style="border-color:rgba(0,230,118,0.3);color:var(--volt);"><i class="fa-solid fa-upload"></i> Import</button>
+                        <button id="logoutBtn" class="log-submit-btn" style="border-color:rgba(255,0,0,0.3);color:#ff4444;"><i class="fa-solid fa-sign-out-alt"></i> Sign Out</button>
+                    </div>
+                    <!-- Cloud Sync -->
+                    <div id="cloudSyncSection" style="margin-top:14px;padding:14px;background:rgba(255,255,255,0.02);border-radius:12px;border:1px solid rgba(255,255,255,0.04);">
+                        <div style="display:flex;align-items:center;gap:6px;margin-bottom:10px;font-size:13px;font-weight:600;color:var(--volt);">
+                            <i class="fa-solid fa-cloud-arrow-up"></i> Cloud Sync
+                        </div>
+                        <div style="display:flex;flex-direction:column;gap:8px;">
+                            <input type="password" id="syncPasswordInput" placeholder="Set a sync password" style="width:100%;padding:10px 12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:8px;color:#fff;font-size:13px;font-family:var(--font-body);outline:none;">
+                            <input type="text" id="syncUrlInput" placeholder="Cloud URL (optional, e.g. https://user.pythonanywhere.com)" style="width:100%;padding:10px 12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:8px;color:rgba(255,255,255,0.5);font-size:11px;font-family:var(--font-body);outline:none;">
+                            <div id="syncServerInfo" style="font-size:10px;color:rgba(255,255,255,0.2);text-align:center;"></div>
+                            <div style="display:flex;gap:8px;">
+                                <button id="syncPushBtn" class="log-submit-btn" style="flex:1;"><i class="fa-solid fa-upload"></i> Push</button>
+                                <button id="syncPullBtn" class="log-submit-btn" style="flex:1;border-color:rgba(0,230,118,0.3);color:var(--volt);"><i class="fa-solid fa-download"></i> Pull</button>
+                            </div>
+                            <div id="syncStatusMsg" style="font-size:11px;color:rgba(255,255,255,0.3);text-align:center;min-height:16px;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notifications Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Core App Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <!-- AI Engine: TensorFlow.js + MobileNet (load before app.js) -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/mobilenet@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd@latest"></script>
+    <script src="three-effects.js"></script>
+    <script src="app.js"></script>
+    <script src="admin.js"></script>
+</body>
+</html>

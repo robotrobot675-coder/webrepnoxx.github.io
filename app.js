@@ -2529,6 +2529,16 @@ class RepnoxxApp {
         const syncPullBtn = document.getElementById("syncPullBtn");
         if (syncPushBtn) syncPushBtn.addEventListener("click", () => this.pushToCloud());
         if (syncPullBtn) syncPullBtn.addEventListener("click", () => this.pullFromCloud());
+
+        // Save cloud URL on input
+        const syncUrlInput = document.getElementById("syncUrlInput");
+        if (syncUrlInput) {
+            syncUrlInput.addEventListener("input", () => {
+                this.saveState("repnoxx_sync_url", syncUrlInput.value.trim());
+                const info = document.getElementById("syncServerInfo");
+                if (info) info.textContent = "Server: " + (syncUrlInput.value.trim() || window.location.origin);
+            });
+        }
     }
 
     updateUserUI() {
@@ -2570,8 +2580,11 @@ class RepnoxxApp {
 
             // Cloud sync server URL
             const serverInfo = document.getElementById("syncServerInfo");
+            const syncUrlInput = document.getElementById("syncUrlInput");
+            const savedUrl = this.safeParseStorage("repnoxx_sync_url", "");
+            if (syncUrlInput && savedUrl) syncUrlInput.value = savedUrl;
             if (serverInfo) {
-                const base = window.location.origin;
+                const base = syncUrlInput?.value?.trim() || window.location.origin;
                 serverInfo.textContent = "Server: " + base;
             }
             // Restore saved sync password
